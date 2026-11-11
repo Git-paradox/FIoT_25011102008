@@ -30,7 +30,7 @@ The experiment uses hardware timer interrupts to control LED timing, generate PW
 - **PWM Frequency:** 500 Hz
 - **Hardware Debug:** Multimeter and oscilloscope
 
-**Assumptions:** I have used P1.0 and P1.1 for the two LED outputs, P1.2 and P1.3 for signal outputs, and an 11.0592 MHz crystal. The LEDs are assumed to be active-low with 330 Ω current-limiting resistors. The timer intervals are based on a classic 12-clock 8051 core.
+I have used P1.0 and P1.1 for the two LED outputs, P1.2 and P1.3 for signal outputs, and an 11.0592 MHz crystal. The LEDs are  active-low with 330 Ω current-limiting resistors. The timer intervals are based on a classic 12-clock 8051 core.
 
 ### 2. Circuit Diagram
 
