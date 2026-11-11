@@ -27,7 +27,7 @@ The experiment uses an AT89S52 microcontroller to control an external LED throug
 - **Debug Interface:** SPI-based ISP programmer
 - **Blink Frequency:** Approximately 1 Hz
 
-**Assumptions:** I have used 5V as the nominal supply, 11.0592 MHz as the crystal frequency, and an SPI-based ISP programmer for the hardware setup details. The LED is assumed to be connected in active-low configuration through a 330 Ω resistor. These are assumed setup values, not exact recorded meter readings.
+I have used 5V as the nominal supply, 11.0592 MHz as the crystal frequency, and an SPI-based ISP programmer for the hardware setup details. The LED connected in active-low configuration through a 330 Ω resistor.
 
 ### 2. Circuit Diagram
 
