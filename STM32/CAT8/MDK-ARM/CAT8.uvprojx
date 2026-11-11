@@ -391,7 +391,6 @@
       <File><FileName>stm32f4xx_hal_msp.c</FileName><FileType>1</FileType><FilePath>..\Core\Src\stm32f4xx_hal_msp.c</FilePath></File>
       <File><FileName>task8a_gpio_follow.c</FileName><FileType>1</FileType><FilePath>..\Core\Src\task8a_gpio_follow.c</FilePath></File>
       <File><FileName>task8b_event_toggle.c</FileName><FileType>1</FileType><FilePath>..\Core\Src\task8b_event_toggle.c</FilePath></File>
-      <File><FileName>system_stm32f4xx.c</FileName><FileType>1</FileType><FilePath>..\Core\Src\system_stm32f4xx.c</FilePath></File>
     </Files>
   </Group>
   <Group>
