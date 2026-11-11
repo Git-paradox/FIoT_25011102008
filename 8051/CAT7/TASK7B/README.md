@@ -26,7 +26,7 @@ The experiment uses an HD44780-compatible 16x2 LCD connected to the AT89S52 usin
 - **Power Supply:** 5V DC
 - **Crystal Frequency:** 11.0592 MHz
 
-**Assumptions:** I have used P2.0 and P2.1 for RS and E, P2.4-P2.7 for D4-D7, and connected RW to GND. The LCD is assumed to use a 5V supply with a contrast potentiometer.
+I have used P2.0 and P2.1 for RS and E, P2.4-P2.7 for D4-D7, and connected RW to GND. The LCD is using a 5V supply with a contrast potentiometer.
 
 ### 2. Circuit Diagram
 
