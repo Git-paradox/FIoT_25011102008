@@ -28,7 +28,7 @@ The experiment uses four LEDs as digital outputs and a push-button as a digital 
 - **Timer:** Timer 0, 10 ms tick
 - **Button Debounce:** 20 ms
 
-**Assumptions:** I have used P1.0-P1.3 for the four LEDs and P3.2/INT0 for the push-button. The LEDs are assumed to be active-low with 330 Ω current-limiting resistors, and the button is assumed to be active-low with a pull-up. The clock is assumed to be 11.0592 MHz.
+**Assumptions:** I have used P1.0-P1.3 for the four LEDs and P3.2/INT0 for the push-button. The LEDs are assumed to be active-low with individual 330 Ω current-limiting resistors. The button is assumed to connect P3.2 to GND when pressed, using the Port 3 internal pull-up. The clock is assumed to be 11.0592 MHz.
 
 ### 2. Circuit Diagram
 
