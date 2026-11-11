@@ -11,7 +11,15 @@ sbit WAVE_OUT = P1^3;       /* Selectable waveform output. */
 
 #if STEPPER_ENABLE
 #define STEPPER_DIRECTION 1
+#define STEPPER_SPEED_MODE 0
+
+#if STEPPER_SPEED_MODE == 0
 #define STEPPER_STEP_INTERVAL_MS 100
+#elif STEPPER_SPEED_MODE == 1
+#define STEPPER_STEP_INTERVAL_MS 50
+#else
+#define STEPPER_STEP_INTERVAL_MS 10
+#endif
 
 unsigned char code step_sequence[4] = {0x09, 0x0C, 0x06, 0x03};
 unsigned char step_index = 0;
@@ -89,19 +97,19 @@ void update_waveform(void)
     }
     else if (waveform_mode == 1)
     {
+        WAVE_OUT = (wave_phase < 5) ? 1 : 0;
+
         wave_phase++;
         if (wave_phase >= 20)
             wave_phase = 0;
-
-        WAVE_OUT = (wave_phase < 5) ? 1 : 0;
     }
     else if (waveform_mode == 2)
     {
+        WAVE_OUT = (wave_phase == 0) ? 1 : 0;
+
         wave_phase++;
         if (wave_phase >= 20)
             wave_phase = 0;
-
-        WAVE_OUT = (wave_phase == 0) ? 1 : 0;
     }
     else
     {
