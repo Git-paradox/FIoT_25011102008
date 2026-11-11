@@ -48,6 +48,10 @@ The LCD is initialized by sending commands to configure 4-bit mode, 2-line displ
 5. Display the character 'A'.
 6. Move to the second row and display a string.
 
+**Firmware Output:**
+
+The compiled HEX file is saved at `Objects/TASK7A.hex`.
+
 **Code Base:**
 
 The program is written in Embedded C using Keil C51.
