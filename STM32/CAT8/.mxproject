@@ -7,12 +7,13 @@ HeaderFiles#2=..\Core\Inc\stm32f4xx_it.h
 HeaderFiles#3=..\Core\Inc\task8_variants.h
 HeaderPath#0=..\Core\Inc
 HeaderFiles=;
-SourceFileListSize=5
+SourceFileListSize=6
 SourceFiles#0=..\Core\Src\main.c
 SourceFiles#1=..\Core\Src\stm32f4xx_it.c
 SourceFiles#2=..\Core\Src\stm32f4xx_hal_msp.c
 SourceFiles#3=..\Core\Src\task8a_gpio_follow.c
 SourceFiles#4=..\Core\Src\task8b_event_toggle.c
+SourceFiles#5=..\Core\Src\system_stm32f4xx.c
 SourcePath#0=..\Core\Src
 SourceFiles=;
 
