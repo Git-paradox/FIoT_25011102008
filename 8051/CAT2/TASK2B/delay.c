@@ -1,17 +1,16 @@
-#include <reg51.h>
 #include "delay.h"
 
-/* Software delay calibrated approximately for a classic 12-clock 8051
-   running from an 11.0592 MHz crystal. Exact timing depends on compiler
-   version and optimization settings; verify on the target hardware. */
+/* Approximate software delay for an 11.0592 MHz, 12-clock 8051.
+   Volatile counters prevent the compiler from removing the empty loops.
+   Exact timing depends on compiler version and optimization settings. */
 void delay_ms(unsigned int milliseconds)
 {
-    unsigned int i;
-    unsigned char j;
+    volatile unsigned int i;
+    volatile unsigned char j;
 
     for (i = 0; i < milliseconds; i++)
     {
-        for (j = 0; j < 123; j++)
+        for (j = 0; j < 230; j++)
         {
             ;
         }
