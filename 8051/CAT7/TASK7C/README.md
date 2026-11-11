@@ -28,7 +28,7 @@ The experiment uses a 4x4 matrix keypad to move a character across a 16x2 LCD.
 - **Power Supply:** 5V DC
 - **Crystal Frequency:** 11.0592 MHz
 
-**Assumptions:** I have used P2.0, P2.1 and P2.4-P2.7 for the LCD and P1.0-P1.7 for the 4x4 keypad. The LCD is assumed to be a 5V HD44780-compatible module with RW connected to GND.
+ I have used P2.0, P2.1 and P2.4-P2.7 for the LCD and P1.0-P1.7 for the 4x4 keypad. The LCD is a 5V HD44780-compatible module with RW connected to GND.
 
 ### 2. Circuit Diagram
 
