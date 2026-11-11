@@ -27,7 +27,7 @@ The experiment uses UART serial communication between the AT89S52 and a PC termi
 - **Terminal Software:** PuTTY
 - **Crystal Frequency:** 11.0592 MHz
 
-**Assumptions:** I have used an 11.0592 MHz crystal and a USB-to-TTL converter with 5V-compatible UART logic. P3.1 (TXD) is connected to converter RXD, converter TXD is connected to P3.0 (RXD), and both devices share a common ground.
+I have used an 11.0592 MHz crystal and a USB-to-TTL converter with 5V-compatible UART logic. P3.1 (TXD) is connected to converter RXD, converter TXD is connected to P3.0 (RXD), and both devices share a common ground.
 
 ### 2. Circuit Diagram
 
