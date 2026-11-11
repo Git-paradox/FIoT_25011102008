@@ -1,18 +1,23 @@
+#ifdef __SDCC
+__sfr __at (0x90) P1;
+__sbit __at (0x90) LED;
+#else
 #include <reg51.h>
+sbit LED = P1^0;
+#endif
+
 #include "delay.h"
 
-/* External LED connected to P1.0 through a current-limiting resistor.
-   Active-low wiring: LED anode to +5 V through resistor, cathode to P1.0. */
-sbit LED = P1^0;
-
+/* External LED: +5 V -> 330 ohm resistor -> LED anode;
+   LED cathode -> P1.0. This is an active-low connection. */
 void main(void)
 {
     while (1)
     {
-        LED = 0;          /* LED ON: P1.0 sinks current */
+        LED = 0;
         delay_ms(500);
 
-        LED = 1;          /* LED OFF */
+        LED = 1;
         delay_ms(500);
     }
 }
