@@ -17,4 +17,4 @@ Each task is stored under its corresponding CAT and TASK directory and includes 
 
 ## Notes
 
-Project files and source code are retained for evaluation. Keil-generated intermediate files are excluded according to the supplied `.gitignore`; HEX firmware files are intentionally tracked.
+Project files and source code are retained for evaluation. Keil-generated intermediate files are excluded according to the supplied `.gitignore`; HEX firmware files are intentionally tracked. CAT2 TASK2B includes a GitHub Actions workflow that compiles its 8051 source with SDCC and commits the generated Intel HEX output.
