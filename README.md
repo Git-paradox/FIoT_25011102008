@@ -19,6 +19,7 @@ Each task is stored under its corresponding CAT and TASK directory and includes 
 | 8051 | CAT5 | TASK5A | Hardware timer, PWM, pulse and optional stepper control |
 | 8051 | CAT6 | TASK6A | UART driver and serial debugging |
 | 8051 | CAT7 | TASK7A-TASK7C | 16x2 LCD driver, dynamic display and keypad character movement |
+| STM32 | CAT8 | TASK8A-TASK8C | GPIO input/output, event-based toggle and short/long press control |
 
 ## Notes
 
