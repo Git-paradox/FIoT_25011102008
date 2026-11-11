@@ -48,6 +48,10 @@ The LCD cursor is positioned using row and column values. A changing numeric val
 6. Increment the value and update the display.
 7. Repeat continuously.
 
+**Firmware Output:**
+
+The compiled HEX file is saved at `Objects/TASK7B.hex`.
+
 **Code Base:**
 
 The program is written in Embedded C using Keil C51.
