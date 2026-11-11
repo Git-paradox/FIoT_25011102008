@@ -50,7 +50,7 @@ void uart_init(void)
     ES = 1;
 }
 
-void uart_putc(unsigned char data)
+void uart_putc(unsigned char tx_byte)
 {
     unsigned char next_head;
 
@@ -62,7 +62,7 @@ void uart_putc(unsigned char data)
 
         if (next_head != tx_tail)
         {
-            tx_buffer[tx_head] = data;
+            tx_buffer[tx_head] = tx_byte;
             tx_head = next_head;
 
             if (tx_active == 0)
@@ -96,7 +96,7 @@ unsigned char uart_available(void)
 
 unsigned char uart_getc(void)
 {
-    unsigned char data;
+    unsigned char received_byte;
 
     while (rx_head == rx_tail)
     {
@@ -104,11 +104,11 @@ unsigned char uart_getc(void)
     }
 
     ES = 0;
-    data = rx_buffer[rx_tail];
+    received_byte = rx_buffer[rx_tail];
     rx_tail = (rx_tail + 1) & UART_BUFFER_MASK;
     ES = 1;
 
-    return data;
+    return received_byte;
 }
 
 unsigned char uart_overflow_count(void)
