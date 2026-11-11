@@ -22,6 +22,7 @@ void uart_init(void)
 {
     unsigned char i;
 
+    P3 |= 0x03;
     SCON = 0x50;
     PCON &= 0x7F;
 
