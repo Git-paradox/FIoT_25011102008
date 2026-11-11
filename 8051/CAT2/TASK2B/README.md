@@ -94,4 +94,4 @@ The experiment demonstrates 8051 toolchain setup, basic hardware bring-up, GPIO 
 - `circuit.png` is intentionally left for the student to add.
 - The software delay is approximate and is compiler/optimization dependent; the loop count should be calibrated against the final board clock and measured blink rate.
 
-**Build status:** GitHub Actions successfully compiled the source with SDCC 4.5.0 for the MCS-51 target and generated `Objects/TASK2B.hex` in Intel HEX format. The Keil µVision project and `STARTUP.A51` are included for the requested Keil workflow, but a Keil C51 build itself has not been run or claimed. The generated HEX is an SDCC build, not a Keil C51 build.
+**Build status:** The student supplied a `TASK2B.hex` file after installing the Keil C51 toolchain. The Intel HEX file has been checked for valid record lengths, checksums and the end-of-file record, then placed at `Objects/TASK2B.hex`. The file structure is consistent with a valid Intel HEX image. The Keil build log was not supplied in this upload, so the compiler provenance is recorded from the student's submission context rather than independently confirmed from a build log.
