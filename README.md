@@ -15,6 +15,7 @@ Each task is stored under its corresponding CAT and TASK directory and includes 
 |---|---|---|---|
 | 8051 | CAT2 | TASK2B | Bare-metal GPIO LED blink with custom delay function |
 | 8051 | CAT3 | TASK3A | Timer-based LED pattern generator and button interrupt controller |
+| 8051 | CAT4 | TASK4A | Keypad-based LED and seven-segment controller |
 
 ## Notes
 
