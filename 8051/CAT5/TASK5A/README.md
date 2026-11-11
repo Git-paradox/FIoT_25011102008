@@ -64,7 +64,7 @@ The waveform output on P1.3 cycles through square wave, variable duty-cycle wave
 
 **Task 4 — Stepper Motor (Optional):**
 
-An optional four-step sequence is included in the source code and is disabled by default. It uses P2.0-P2.3 and must be connected through a suitable motor driver, not directly to the microcontroller. Set `STEPPER_ENABLE` to 1 to enable it. `STEPPER_DIRECTION` selects direction, while `STEPPER_SPEED_MODE` selects 100 ms/step, 50 ms/step or 10 ms/step.
+An optional four-step sequence is included in the source code and is disabled by default. It uses P2.0-P2.3 in the sequence 1000, 0100, 0010, 0001 and must be connected through a suitable motor driver, not directly to the microcontroller. Set `STEPPER_ENABLE` to 1 to enable it. `STEPPER_DIRECTION` selects direction, while `STEPPER_SPEED_MODE` selects 100 ms/step, 50 ms/step or 10 ms/step.
 
 **Pseudocode:**
 
