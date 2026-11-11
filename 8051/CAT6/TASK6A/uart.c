@@ -79,7 +79,7 @@ void uart_putc(unsigned char data)
     }
 }
 
-void uart_puts(unsigned char code *text)
+void uart_puts(char code *text)
 {
     while (*text != 0)
     {
