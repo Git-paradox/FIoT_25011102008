@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_proj.xsd">
+  <SchemaVersion>1.1</SchemaVersion>
+  <Header>### uVision Project, (C) Keil Software</Header>
+  <Targets>
+    <Target>
+      <TargetName>TASK2B</TargetName>
+      <ToolsetNumber>0x0</ToolsetNumber>
+      <ToolsetName>MCS-51</ToolsetName>
+      <TargetOption>
+        <TargetCommonOption>
+          <Device>AT89S52</Device>
+          <Vendor>Atmel</Vendor>
+          <Cpu>IRAM(0-0xFF) IROM(0-0x1FFF) CLOCK(11059200) MODP2</Cpu>
+          <OutputDirectory>Objects\</OutputDirectory>
+          <OutputName>TASK2B</OutputName>
+          <CreateExecutable>1</CreateExecutable>
+          <CreateLib>0</CreateLib>
+          <CreateHexFile>1</CreateHexFile>
+          <DebugInformation>1</DebugInformation>
+          <BrowseInformation>1</BrowseInformation>
+          <ListingPath>Listings\</ListingPath>
+        </TargetCommonOption>
+        <CommonProperty>
+          <UseCPPCompiler>0</UseCPPCompiler>
+          <IncludeInBuild>1</IncludeInBuild>
+        </CommonProperty>
+        <DllOption>
+          <SimDllName>S8051.DLL</SimDllName>
+          <SimDllArguments></SimDllArguments>
+          <SimDlgDll>DARM8051.DLL</SimDlgDll>
+          <SimDlgDllArguments>-p51</SimDlgDllArguments>
+        </DllOption>
+        <DebugOption><OPTHX><HexSelection>1</HexSelection></OPTHX></DebugOption>
+        <Utilities>
+          <Flash1><DeviceType>0</DeviceType><UseTargetDll>1</UseTargetDll><UseExternalTool>0</UseExternalTool><RunIndependent>0</RunIndependent><UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging><Capability>1</Capability></Flash1>
+        </Utilities>
+        <Target51>
+          <Mode>0</Mode><Code romsize="2"/><XData><XdataSize>0</XdataSize></XData>
+          <UseMemoryFromTarget>1</UseMemoryFromTarget><UseInstructText>0</UseInstructText>
+          <UseOnchipROM>1</UseOnchipROM><UseOnchipXRAM>0</UseOnchipXRAM>
+        </Target51>
+      </TargetOption>
+      <Groups>
+        <Group><GroupName>Source Group 1</GroupName><Files>
+          <File><FileName>main.c</FileName><FileType>1</FileType><FilePath>main.c</FilePath></File>
+          <File><FileName>delay.c</FileName><FileType>1</FileType><FilePath>delay.c</FilePath></File>
+          <File><FileName>STARTUP.A51</FileName><FileType>2</FileType><FilePath>STARTUP.A51</FilePath></File>
+        </Files></Group>
+      </Groups>
+    </Target>
+  </Targets>
+</Project>
