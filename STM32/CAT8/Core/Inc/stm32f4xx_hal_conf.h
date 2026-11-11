@@ -23,7 +23,6 @@
 
 #ifdef HAL_RCC_MODULE_ENABLED
 #include "stm32f4xx_hal_rcc.h"
-#include "stm32f4xx_hal_rcc_ex.h"
 #endif
 
 #ifdef HAL_GPIO_MODULE_ENABLED
