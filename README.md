@@ -17,6 +17,7 @@ Each task is stored under its corresponding CAT and TASK directory and includes 
 | 8051 | CAT3 | TASK3A | Timer-based LED pattern generator and button interrupt controller |
 | 8051 | CAT4 | TASK4A | Keypad-based LED and seven-segment controller |
 | 8051 | CAT5 | TASK5A | Hardware timer, PWM, pulse and optional stepper control |
+| 8051 | CAT6 | TASK6A | UART driver and serial debugging |
 
 ## Notes
 
