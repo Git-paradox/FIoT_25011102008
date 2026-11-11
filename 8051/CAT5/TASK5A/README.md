@@ -22,11 +22,13 @@ The experiment uses hardware timer interrupts to control LED timing, generate PW
 - **PWM LED Pin:** P1.1
 - **Square-Wave Output:** P1.2
 - **Waveform Output:** P1.3
+- **Optional Stepper Outputs:** P2.0-P2.3 through a motor driver
 - **Power Supply:** 5V DC
 - **Crystal Frequency:** 11.0592 MHz
 - **Timer 0:** 1 ms interrupt
 - **Timer 1:** Approximately 100 µs interrupt
 - **PWM Frequency:** 500 Hz
+- **Hardware Debug:** Multimeter and oscilloscope
 
 **Assumptions:** I have used P1.0 and P1.1 for the two LED outputs, P1.2 and P1.3 for signal outputs, and an 11.0592 MHz crystal. The LEDs are assumed to be active-low with 330 Ω current-limiting resistors. The timer intervals are based on a classic 12-clock 8051 core.
 
@@ -58,11 +60,11 @@ The square-wave output on P1.2 cycles through the following frequencies:
 - Mode 4: 2 kHz
 - Mode 5: 5 kHz
 
-The waveform output on P1.3 cycles through square wave, variable duty-cycle wave, pulse train and burst signal.
+The waveform output on P1.3 cycles through square wave, variable duty-cycle wave, pulse train and burst signal. The frequency and waveform modes change automatically at 2-second intervals.
 
 **Task 4 — Stepper Motor (Optional):**
 
-An optional four-step sequence is included in the source code. It is disabled by default. It can be enabled after connecting a suitable motor driver and confirming the motor wiring.
+An optional four-step sequence is included in the source code and is disabled by default. It uses P2.0-P2.3 and must be connected through a suitable motor driver, not directly to the microcontroller. Set `STEPPER_ENABLE` to 1 to enable it. `STEPPER_DIRECTION` selects direction, while `STEPPER_SPEED_MODE` selects 100 ms/step, 50 ms/step or 10 ms/step.
 
 **Pseudocode:**
 
