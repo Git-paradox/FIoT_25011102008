@@ -66,6 +66,7 @@ The program is written in Embedded C using Keil C51.
 - `uart_isr()` handles UART transmit and receive interrupts.
 - `uart_getc()` reads a character from the RX ring buffer.
 - `uart_available()` checks whether received data is available.
+- `Objects/TASK6A.hex` contains the compiled firmware.
 
 ### 4. Inference
 
