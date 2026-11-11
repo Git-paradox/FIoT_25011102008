@@ -29,7 +29,7 @@ The experiment uses a matrix keypad as input, a seven-segment display to show th
 - **Crystal Frequency:** 11.0592 MHz
 - **Keypad Debounce:** Approximately 20 ms
 
-**Assumptions:** I have used a standard 4x4 keypad layout, a common-cathode seven-segment display, and P1, P2 and P3 for the keypad, display and LEDs respectively. Each LED and display segment is assumed to have a 330 Ω current-limiting resistor. The clock is assumed to be 11.0592 MHz.
+ I have used a standard 4x4 keypad layout, a common-cathode seven-segment display, and P1, P2 and P3 for the keypad, display and LEDs respectively. Each LED and display segment has a 330 Ω current-limiting resistor. The clock is 11.0592 MHz.
 
 ### 2. Circuit Diagram
 
