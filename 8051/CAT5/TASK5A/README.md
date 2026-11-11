@@ -86,6 +86,7 @@ The program is written in Embedded C using Keil C51.
 - `update_square_wave()` generates the selectable square-wave frequency.
 - `update_waveform()` generates the different signal types.
 - `update_stepper()` contains the optional stepper motor sequence.
+- `Objects/TASK5A.hex` contains the compiled firmware.
 
 ### 4. Inference
 
