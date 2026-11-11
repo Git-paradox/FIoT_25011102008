@@ -60,6 +60,10 @@ The character is kept within the 16 columns and 2 rows of the LCD. A debounce ch
 7. Display the character at its new position.
 8. Repeat continuously.
 
+**Firmware Output:**
+
+The compiled HEX file is saved at `Objects/TASK7C.hex`.
+
 **Code Base:**
 
 The program is written in Embedded C using Keil C51.
