@@ -72,6 +72,7 @@ The program is written in Embedded C using Keil C51.
 - `binary_counter()` generates the binary count from 0 to 15.
 - `alternate_led()` alternates between 1010 and 0101.
 - `blink_all()` blinks all four LEDs together.
+- `Objects/TASK4A.hex` contains the compiled firmware.
 
 ### 4. Inference
 
