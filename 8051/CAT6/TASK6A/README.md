@@ -27,7 +27,7 @@ The experiment uses UART serial communication between the AT89S52 and a PC termi
 - **Terminal Software:** PuTTY
 - **Crystal Frequency:** 11.0592 MHz
 
-**Assumptions:** I have used an 11.0592 MHz crystal and a USB-to-TTL converter with 5V-compatible UART logic. TXD is connected to converter RXD, converter TXD is connected to RXD, and both devices share a common ground.
+**Assumptions:** I have used an 11.0592 MHz crystal and a USB-to-TTL converter with 5V-compatible UART logic. P3.1 (TXD) is connected to converter RXD, converter TXD is connected to P3.0 (RXD), and both devices share a common ground.
 
 ### 2. Circuit Diagram
 
@@ -51,6 +51,8 @@ The program continuously transmits `Hello from 8051` to the PC terminal. Charact
 6. Store received characters in the RX ring buffer.
 7. Read characters from the buffer and transmit them back.
 8. Repeat continuously.
+
+**PuTTY Settings:** Select the USB-to-TTL COM port, set the speed to 9600, data bits to 8, stop bits to 1, parity to None and flow control to None. Disable local echo so the returned character from the 8051 is visible only once.
 
 **Code Base:**
 
