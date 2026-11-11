@@ -1,3 +1,4 @@
+#include "task8_variants.h"
 #include "main.h"
 
 /* Task 8A: LED follows the current push-button state.
