@@ -123,3 +123,8 @@ The final application is written in Embedded C using STM32 HAL.
 The STM32 reads the button state and controls the onboard LED. Valid short presses toggle the LED, while long presses activate continuous blinking mode. The application uses a non-blocking time-based method to classify button presses.
 
 The experiment demonstrates GPIO input/output, event-based switch handling, software debouncing and short/long-press detection using STM32 HAL.
+
+### Build Output
+
+- **Keil Project:** `MDK-ARM/CAT8.uvprojx`
+- **Firmware Output:** `MDK-ARM/Objects/CAT8.hex`
