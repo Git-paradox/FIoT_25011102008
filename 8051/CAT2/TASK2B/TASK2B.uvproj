@@ -17,7 +17,7 @@
           <Vendor>Microchip</Vendor>
           <Cpu>IRAM(0-0xFF) IROM(0-0x1FFF) CLOCK(11059200) MODP2</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
-          <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
+          <StartupFile>".\\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
           <DeviceId>3411</DeviceId>
           <RegisterFile>REGX51.H</RegisterFile>
@@ -382,9 +382,14 @@
               <FilePath>.\STARTUP.A51</FilePath>
             </File>
             <File>
-              <FileName>ledblinkplz.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\ledblinkplz.c</FilePath>
+              <FilePath>.\\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\\delay.c</FilePath>
             </File>
           </Files>
         </Group>
