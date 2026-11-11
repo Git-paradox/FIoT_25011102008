@@ -34,7 +34,11 @@ jobs:
           BUILD_DIR="$(mktemp -d)"
           cp "$TASK_DIR/main.c" "$TASK_DIR/delay.c" "$TASK_DIR/delay.h" "$BUILD_DIR/"
           cd "$BUILD_DIR"
-          sdcc -mmcs51 --model-small --opt-code-size -o TASK2B.ihx main.c delay.c
+          sdcc -mmcs51 --model-small --opt-code-size -c main.c
+          sdcc -mmcs51 --model-small --opt-code-size -c delay.c
+          test -s main.rel
+          test -s delay.rel
+          sdcc -mmcs51 --model-small --out-fmt-ihx -o TASK2B.ihx main.rel delay.rel
           test -s TASK2B.ihx
           packihx TASK2B.ihx > "$TASK_DIR/Objects/TASK2B.hex"
           test -s "$TASK_DIR/Objects/TASK2B.hex"
