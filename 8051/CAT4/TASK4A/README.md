@@ -22,11 +22,12 @@ The experiment uses a matrix keypad as input, a seven-segment display to show th
 - **Keypad Rows:** P1.0-P1.3
 - **Keypad Columns:** P1.4-P1.7
 - **Seven-Segment Display:** Common-cathode, connected to Port 2
-- **LED GPIO Pins:** P3.4-P3.7
+- **LED GPIO Pins:** P3.4-P3.7 (LED1=P3.4, LED2=P3.5, LED3=P3.6, LED4=P3.7)
 - **Peripheral:** Four LEDs, matrix keypad and one seven-segment display
 - **Power Supply:** 5V DC
 - **LED Active State:** LOW
 - **Crystal Frequency:** 11.0592 MHz
+- **Keypad Debounce:** Approximately 20 ms
 
 **Assumptions:** I have used a standard 4x4 keypad layout, a common-cathode seven-segment display, and P1, P2 and P3 for the keypad, display and LEDs respectively. Each LED and display segment is assumed to have a 330 Ω current-limiting resistor. The clock is assumed to be 11.0592 MHz.
 
