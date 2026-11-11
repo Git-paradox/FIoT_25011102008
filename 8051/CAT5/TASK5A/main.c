@@ -21,7 +21,7 @@ sbit WAVE_OUT = P1^3;       /* Selectable waveform output. */
 #define STEPPER_STEP_INTERVAL_MS 10
 #endif
 
-unsigned char code step_sequence[4] = {0x09, 0x0C, 0x06, 0x03};
+unsigned char code step_sequence[4] = {0x08, 0x04, 0x02, 0x01};
 unsigned char step_index = 0;
 #endif
 
