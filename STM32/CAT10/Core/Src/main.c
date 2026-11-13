@@ -158,8 +158,9 @@ static uint8_t SendAT(const char *command, uint32_t timeout)
     (void)ReadESPResponse(espResponse, sizeof(espResponse), timeout);
 
     return ((strstr(espResponse, "OK") != NULL) ||
-            (strstr(espResponse, "CONNECT") != NULL) ||
-            (strstr(espResponse, "WIFI GOT IP") != NULL)) ? 1U : 0U;
+            (strstr(espResponse, "ALREADY CONNECTED") != NULL) ||
+            (strstr(espResponse, "WIFI GOT IP") != NULL) ||
+            (strstr(espResponse, "CONNECT\r\n") != NULL)) ? 1U : 0U;
 }
 
 static uint8_t IsConfigured(const char *value, const char *placeholder)
