@@ -98,7 +98,17 @@ The program configures station mode, scans access points, joins the selected net
 
 The ESP8266 supports 2.4 GHz Wi-Fi. I use a compatible 2.4 GHz access point.
 
-### 2. Sensor Data
+### 2. TCP Receiver on the PC
+
+I use the included Tools/tcp_server.py script as the TCP receiver.
+
+1. Run the script on the PC with: python Tools/tcp_server.py
+2. Find the PC's local IPv4 address using ipconfig.
+3. Set TCP_SERVER_IP in Core/Inc/app_config.h to that address. Keep TCP_SERVER_PORT at 5000 unless the server port is changed too.
+4. Keep the PC and Wemos connected to the same Wi-Fi network and allow the Python server through the PC firewall if prompted.
+5. Build and run the STM32 firmware. Sensor lines should appear in the server terminal after the TCP connection is established.
+
+### 3. Sensor Data
 
 The BME280 is connected through I2C1:
 
@@ -121,7 +131,7 @@ Example data format:
 
 T=25.40C,P=100812Pa,H=56.20%
 
-### 3. PuTTY Settings
+### 4. PuTTY Settings
 
 - **Connection Type:** Serial
 - **Serial Line:** ST-LINK Virtual COM Port
@@ -139,7 +149,7 @@ Useful PC terminal commands:
 - STATUS - query IP and TCP status.
 - SENSOR - read and display the BME280 values.
 
-### 4. Assumptions and Testing
+### 5. Assumptions and Testing
 
 The assignment does not specify the UART baud rates, Wi-Fi credentials, TCP server address/port or BME280 I2C address. I have used the settings listed above and included editable placeholders for the network and server details.
 
