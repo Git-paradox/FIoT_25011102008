@@ -7,7 +7,7 @@ Repository for recording Foundations of IoT continuous assessment tasks.
 - `8051/` — 8051 microcontroller tasks
 - `STM32/` — STM32 microcontroller tasks
 
-Each task is stored under its corresponding CAT and TASK directory and includes a task-specific `README.md` and circuit diagram (`circuit.png`, added by the student).
+Each submission is stored in its own task folder. Every STM32 task has a separate `.ioc`, `.mxproject`, `Core/`, `Drivers/`, `MDK-ARM/` project, startup file and `README.md`. Circuit diagrams are kept as `circuit.png` in the corresponding task folder.
 
 ## Current submissions
 
@@ -19,9 +19,9 @@ Each task is stored under its corresponding CAT and TASK directory and includes 
 | 8051 | CAT5 | TASK5A | Hardware timer, PWM, pulse and optional stepper control |
 | 8051 | CAT6 | TASK6A | UART driver and serial debugging |
 | 8051 | CAT7 | TASK7A-TASK7C | 16x2 LCD driver, dynamic display and keypad character movement |
-| STM32 | CAT8 | TASK8A-TASK8C | GPIO input/output, event-based toggle and short/long press control |
-| STM32 | CAT9 | TASK9A-TASK9B | UART communication and string-based LED commands |
-| STM32 | CAT10 | TASK9A-TASK9C | Wemos ESP8266 AT commands, Wi-Fi connection and BME280 data transmission |
+| STM32 | CAT8 | TASK8A, TASK8B, TASK8C | GPIO input/output, debounced event toggle and short/long press control |
+| STM32 | CAT9 | TASK9A, TASK9B | Basic UART transmit/echo and string-based LED commands |
+| STM32 | CAT10 | TASK10A, TASK10B, TASK10C | Wemos UART, ESP8266 AT commands, Wi-Fi and BME280 TCP transmission |
 
 ## Notes
 
