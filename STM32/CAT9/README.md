@@ -27,7 +27,7 @@ The experiment uses UART communication between the STM32 Nucleo board and a PC t
 - **Terminal Software:** PuTTY
 - **LED:** LD2, PA5
 
-**Assumptions:** The question does not specify the UART baud rate, so I have used 9600 baud, 8 data bits, no parity and 1 stop bit. I have used USART2 on PA2/PA3 through the onboard ST-LINK Virtual COM Port. The LED is the onboard LD2 on PA5.
+The question does not specify the UART baud rate, so I have used 9600 baud, 8 data bits, no parity and 1 stop bit. I have used USART2 on PA2/PA3 through the onboard ST-LINK Virtual COM Port. The LED is the onboard LD2 on PA5.
 
 **Firmware Output:** The compiled file will be saved at `MDK-ARM/Objects/CAT9.hex`.
 
