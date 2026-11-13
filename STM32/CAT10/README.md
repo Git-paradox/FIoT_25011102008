@@ -100,7 +100,16 @@ The ESP8266 supports 2.4 GHz Wi-Fi. I use a compatible 2.4 GHz access point.
 
 ### 2. Sensor Data
 
-The BME280 is connected through I2C1. The firmware checks both common I2C addresses, 0x76 and 0x77, reads the calibration data and calculates:
+The BME280 is connected through I2C1:
+
+| BME280 | STM32 Nucleo-F401RE |
+|---|---|
+| VCC | 3.3V |
+| GND | GND |
+| SCL | PB6 (I2C1_SCL) |
+| SDA | PB7 (I2C1_SDA) |
+
+The firmware checks both common I2C addresses, 0x76 and 0x77, reads the calibration data and calculates:
 
 - Temperature in degrees Celsius.
 - Pressure in pascals.
