@@ -21,6 +21,7 @@ Each task is stored under its corresponding CAT and TASK directory and includes 
 | 8051 | CAT7 | TASK7A-TASK7C | 16x2 LCD driver, dynamic display and keypad character movement |
 | STM32 | CAT8 | TASK8A-TASK8C | GPIO input/output, event-based toggle and short/long press control |
 | STM32 | CAT9 | TASK9A-TASK9B | UART communication and string-based LED commands |
+| STM32 | CAT10 | TASK9A-TASK9C | Wemos ESP8266 AT commands, Wi-Fi connection and BME280 data transmission |
 
 ## Notes
 
