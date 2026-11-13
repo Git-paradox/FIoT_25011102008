@@ -143,7 +143,7 @@ void ESP8266_portConnect(const char *protocol, const char *host, const char *por
 
     ESP_SendCommand("AT+CIPMUX=0", "OK", 3000U);
     (void)snprintf(command, sizeof(command),
-                   "AT+CIPSTART=\"%s\",\"%s\",\"%s\"",
+                   "AT+CIPSTART=\"%s\",\"%s\",%s",
                    protocol, host, port);
     ESP_SendCommand(command, "CONNECT", 15000U);
 }
