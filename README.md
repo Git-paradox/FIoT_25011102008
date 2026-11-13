@@ -1,6 +1,6 @@
 # Foundations of IoT — Lab Submissions
 
-Student repository for Foundations of IoT continuous assessment tasks.
+Repository for recording Foundations of IoT continuous assessment tasks.
 
 ## Platforms
 
