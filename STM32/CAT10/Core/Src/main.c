@@ -191,6 +191,7 @@ static void ConnectTCP(void)
         return;
     }
 
+    (void)SendAT("AT+CIPMUX=0", 4000U);
     (void)snprintf(command, sizeof(command), "AT+CIPSTART=\"TCP\",\"%s\",%u",
                    TCP_SERVER_IP, (unsigned int)TCP_SERVER_PORT);
     if (SendAT(command, TCP_CONNECT_TIMEOUT))
