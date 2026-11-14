@@ -50,6 +50,10 @@ The PuTTY connection is the serial-monitoring path. It displays sensor readings 
 
 Connect UART TX to the other device's RX, connect RX to TX, and ensure all connected modules share a common ground. The BME280 I2C lines use pull-ups as configured in the STM32 project. Confirm the voltage requirements of the ESP8266 board before wiring it to the Nucleo.
 
+## Circuit Diagram
+
+![Circuit Diagram](circuit.png)
+
 ## Firmware Workflow
 
 1. The STM32 checks the BME280 at I2C address `0x76` and then `0x77`.
