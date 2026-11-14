@@ -26,6 +26,7 @@ Each submission is stored in its own task folder. Every STM32 task has a separat
 | STM32 | CAT12 | TASK12A, TASK12B, TASK12C | On-board LED, button state remembrance and short/long press detection |
 | STM32 | CAT13 | TASK13 | BME280 SensorAPI, ESP8266 HTTP/JSON server and Node-RED analytics |
 | STM32 | CAT14 | TASK14 | BME280 readings with custom ESP8266 MQTT publish/subscribe API |
+| STM32 | CAT15 | TASK15 | IoT project integrating entire flow of learning experience |
 
 ## Notes
 
