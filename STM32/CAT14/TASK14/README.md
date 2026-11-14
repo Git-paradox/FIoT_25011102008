@@ -49,7 +49,7 @@ The application publishes a JSON payload containing status, temperature, humidit
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ## Build
 

@@ -36,7 +36,7 @@ The program uses \`HAL_GPIO_ReadPin()\` and \`HAL_GPIO_WritePin()\`.
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ## Build
 

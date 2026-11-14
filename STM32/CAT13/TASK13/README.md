@@ -67,7 +67,7 @@ Import Tools/NodeRED_flow.json into Node-RED. Change the HTTP Request node URL t
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ## Build
 

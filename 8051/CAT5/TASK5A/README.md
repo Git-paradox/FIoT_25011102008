@@ -34,7 +34,7 @@ I have used P1.0 and P1.1 for the two LED outputs, P1.2 and P1.3 for signal outp
 
 ### 2. Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ### 3. Core Logic / Pseudocode / Code Base
 

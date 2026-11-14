@@ -56,7 +56,7 @@ The Wemos must have ESP8266 AT firmware installed. An ordinary Arduino Wi-Fi ske
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ## Build
 

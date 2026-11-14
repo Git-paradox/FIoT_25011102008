@@ -76,7 +76,7 @@ A simple receiver is included at \`Tools/tcp_server.py\`.
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ## Build
 

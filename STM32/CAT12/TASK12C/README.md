@@ -40,7 +40,7 @@ The assignment requires different actions for short and long presses but does no
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ## Build
 

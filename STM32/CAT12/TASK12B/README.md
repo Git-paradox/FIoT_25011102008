@@ -36,7 +36,7 @@ The program reads PC13 and applies a 25 ms debounce interval. On each confirmed 
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ## Build
 

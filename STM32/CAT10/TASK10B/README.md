@@ -53,7 +53,7 @@ The table records the command names to investigate for the listed modem function
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ## Build
 

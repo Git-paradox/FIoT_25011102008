@@ -32,7 +32,7 @@ I have used P1.0-P1.3 for the four LEDs and P3.2/INT0 for the push-button. The L
 
 ### 2. Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ### 3. Core Logic / Pseudocode / Code Base
 

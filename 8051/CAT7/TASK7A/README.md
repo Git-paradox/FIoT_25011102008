@@ -31,7 +31,7 @@ I have used P2.0 and P2.1 for RS and E, P2.4-P2.7 for D4-D7, and connected RW to
 
 ### 2. Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ### 3. Core Logic / Pseudocode / Code Base
 

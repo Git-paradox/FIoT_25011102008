@@ -31,7 +31,7 @@ I have used 5V as the nominal supply, 11.0592 MHz as the crystal frequency, and 
 
 ### 2. Circuit Diagram
 
-![Circuit Diagram](circuit.svg)
+![Circuit Diagram](circuit.png)
 
 ### 3. Core Logic / Pseudocode / Code Base
 
