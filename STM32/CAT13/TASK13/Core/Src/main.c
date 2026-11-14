@@ -11,6 +11,7 @@ UART_HandleTypeDef huart2;
 
 static struct bme280_dev sensor;
 static struct bme280_data sensorData;
+static struct bme280_settings sensorSettings;
 static uint8_t sensorAddress = BME280_I2C_ADDRESS;
 static char requestBuffer[900];
 static uint16_t requestLength = 0U;
@@ -131,16 +132,16 @@ static uint8_t BME280_InitSensor(void)
     if (bme280_init(&sensor) != BME280_OK)
         return 0U;
 
-    sensor.settings.osr_h = BME280_OVERSAMPLING_1X;
-    sensor.settings.osr_p = BME280_OVERSAMPLING_1X;
-    sensor.settings.osr_t = BME280_OVERSAMPLING_1X;
-    sensor.settings.filter = BME280_FILTER_COEFF_OFF;
-    sensor.settings.standby_time = BME280_STANDBY_TIME_1000_MS;
+    sensorSettings.osr_h = BME280_OVERSAMPLING_1X;
+    sensorSettings.osr_p = BME280_OVERSAMPLING_1X;
+    sensorSettings.osr_t = BME280_OVERSAMPLING_1X;
+    sensorSettings.filter = BME280_FILTER_COEFF_OFF;
+    sensorSettings.standby_time = BME280_STANDBY_TIME_1000_MS;
 
     if (bme280_set_sensor_settings(
         BME280_SEL_OSR_PRESS | BME280_SEL_OSR_TEMP |
         BME280_SEL_OSR_HUM | BME280_SEL_FILTER |
-        BME280_SEL_STANDBY, &sensor) != BME280_OK)
+        BME280_SEL_STANDBY, &sensorSettings, &sensor) != BME280_OK)
         return 0U;
 
     if (bme280_set_sensor_mode(BME280_POWERMODE_NORMAL, &sensor) != BME280_OK)
