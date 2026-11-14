@@ -60,7 +60,7 @@ CR moves the cursor to the start of the line. LF moves the cursor down to the ne
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.png)
+![Circuit Diagram](circuit.svg)
 
 ## Build
 

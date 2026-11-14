@@ -33,7 +33,7 @@ The program configures PA5 as a GPIO output and toggles LD2 every 500 ms.
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.png)
+![Circuit Diagram](circuit.svg)
 
 ## Build
 

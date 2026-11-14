@@ -58,7 +58,7 @@ The program uses \`HAL_UART_Init()\`, \`HAL_UART_Transmit()\`, \`HAL_UART_Receiv
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.png)
+![Circuit Diagram](circuit.svg)
 
 ## Build
 

@@ -32,7 +32,7 @@ The experiment uses a 4x4 matrix keypad to move a character across a 16x2 LCD.
 
 ### 2. Circuit Diagram
 
-![Circuit Diagram](circuit.png)
+![Circuit Diagram](circuit.svg)
 
 ### 3. Core Logic / Pseudocode / Code Base
 

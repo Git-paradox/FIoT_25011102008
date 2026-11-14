@@ -36,7 +36,7 @@ Set WIFI_SSID and WIFI_PASSWORD in Core/Inc/app_config.h. Replace the sample IP 
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.png)
+![Circuit Diagram](circuit.svg)
 
 ## Build
 

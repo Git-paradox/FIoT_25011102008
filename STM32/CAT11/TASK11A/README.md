@@ -53,7 +53,7 @@ The response uses HTTP/1.1 200 OK, Content-Type: text/html and the calculated Co
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit.png)
+![Circuit Diagram](circuit.svg)
 
 ## Build
 

@@ -33,7 +33,7 @@ The experiment uses a matrix keypad as input, a seven-segment display to show th
 
 ### 2. Circuit Diagram
 
-![Circuit Diagram](circuit.png)
+![Circuit Diagram](circuit.svg)
 
 ### 3. Core Logic / Pseudocode / Code Base
 

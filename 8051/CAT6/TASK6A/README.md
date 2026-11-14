@@ -31,7 +31,7 @@ I have used an 11.0592 MHz crystal and a USB-to-TTL converter with 5V-compatible
 
 ### 2. Circuit Diagram
 
-![Circuit Diagram](circuit.png)
+![Circuit Diagram](circuit.svg)
 
 ### 3. Core Logic / Pseudocode / Code Base
 
