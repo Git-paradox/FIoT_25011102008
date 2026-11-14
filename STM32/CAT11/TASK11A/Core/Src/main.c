@@ -15,6 +15,39 @@ static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void UART_Print(const char *text);
 static uint8_t ESP_SendCommand(const char *command, const char *expected, uint32_t timeout);
+static uint8_t ESP_WaitForText(const char *expected, uint32_t timeout)
+{
+    char response[160];
+    uint16_t length = 0U;
+    uint8_t ch;
+    uint32_t start = HAL_GetTick();
+
+    response[0] = '\0';
+
+    while ((HAL_GetTick() - start) < timeout)
+    {
+        if (HAL_UART_Receive(&huart1, &ch, 1U, 20U) == HAL_OK)
+        {
+            HAL_UART_Transmit(&huart2, &ch, 1U, 100U);
+
+            if (length < sizeof(response) - 1U)
+            {
+                response[length++] = (char)ch;
+                response[length] = '\0';
+            }
+
+            if (strstr(response, expected) != NULL)
+                return 1U;
+
+            if (strstr(response, "ERROR") != NULL ||
+                strstr(response, "FAIL") != NULL)
+                return 0U;
+        }
+    }
+
+    return 0U;
+}
+
 static uint8_t ESP_WaitForPrompt(uint32_t timeout);
 static void ESP_StartServer(void);
 static uint8_t HTTP_RequestReady(void);
@@ -161,7 +194,7 @@ static void HTTP_SendStaticResponse(int linkId)
     {
         HAL_UART_Transmit(&huart1, (uint8_t *)response,
                           (uint16_t)responseLength, 3000U);
-        (void)ESP_SendCommand("", "SEND OK", 5000U);
+        (void)ESP_WaitForText("SEND OK", 5000U);
     }
 
     (void)snprintf(command, sizeof(command), "AT+CIPCLOSE=%d", linkId);
