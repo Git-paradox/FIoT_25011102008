@@ -2,38 +2,54 @@
 
 **EXP:** CONTINUOUS LAB EVALUATION 11
 
-**DATE:** 14/10/2026
+**DATE:** 12/10/2026
 
-**NAME OF EXP:** On-board LED Bring-Up
+**NAME OF EXP:** HTTP Server - STM32/Wemos Wi-Fi Modem Using AT Commands
 
-**HARDWARE:** STM32F401RE Nucleo
+**HARDWARE:** STM32F401RE Nucleo + Wemos D1 Mini (ESP8266)
 
 ## Aim
 
-Develop and run a program to verify the NUCLEO-F401RE GPIO output by blinking the on-board LED at a fixed interval.
+Configure the ESP8266 as a TCP server, receive a browser HTTP request through an +IPD frame and return a static HTML HTTP response from the STM32.
 
-## Configuration
+## Connections
 
-- Board: NUCLEO-F401RE.
-- LED: LD2 on PA5, active high.
-- Clock: internal HSI, 16 MHz.
-- Blink interval: 500 ms ON/OFF interval used for this implementation.
+| Wemos D1 Mini | STM32 Nucleo-F401RE |
+|---|---|
+| TX | PA10 (USART1_RX) |
+| RX | PA9 (USART1_TX) |
+| GND | GND |
+
+USART1 is configured at 115200 baud, 8-N-1. USART2 is used by the Nucleo ST-LINK Virtual COM Port at 9600 baud, 8-N-1. Connect TX to RX and use a common ground.
 
 ## Working
 
-The program configures PA5 as a GPIO output and toggles LD2 every 500 ms.
+The STM32 sends the ESP8266 AT commands to join the local Wi-Fi network, enable multiple connections and start a TCP server on port 80:
 
-## Algorithm
+- AT
+- AT+CWMODE=1
+- AT+CWJAP
+- AT+CIPMUX=1
+- AT+CIPSERVER=1,80
 
-1. Initialize HAL and the system clock.
-2. Enable GPIOA clock.
-3. Configure PA5 as push-pull output.
-4. Toggle PA5.
-5. Wait 500 ms and repeat.
+When a browser request arrives, the ESP8266 forwards it to the STM32 with an +IPD notification. The STM32 extracts the connection ID and constructs an HTTP response containing the static HTML page.
 
-## Code
+The response is sent in two stages using AT+CIPSEND: first the connection ID and exact byte length are supplied, then the HTTP response is transmitted after the ESP8266 returns the prompt.
 
-The program uses HAL_GPIO_TogglePin() and HAL_Delay().
+## Configuration
+
+Set WIFI_SSID and WIFI_PASSWORD in Core/Inc/app_config.h. The computer and Wemos must be connected to the same Wi-Fi network. The ESP8266 IP address is printed through USART2 after AT+CIFSR.
+
+Open http://<ESP8266_IP>/ in a browser.
+
+## Response
+
+The HTML body contains:
+
+- STM32 IoT Node
+- Hello from STM32
+
+The response uses HTTP/1.1 200 OK, Content-Type: text/html and the calculated Content-Length.
 
 ## Circuit Diagram
 
@@ -41,8 +57,8 @@ The program uses HAL_GPIO_TogglePin() and HAL_Delay().
 
 ## Build
 
-Open MDK-ARM/TASK11A.uvprojx in Keil MDK-ARM and build the target. The HEX output is created in MDK-ARM/Objects/.
+Open MDK-ARM/TASK11A.uvprojx in Keil MDK-ARM and build the target.
 
 ## Testing
 
-The standalone Task11A project is prepared. Hardware testing is pending.
+The firmware is prepared. Wi-Fi connection, browser request and response are pending hardware verification.

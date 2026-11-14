@@ -2,53 +2,34 @@
 
 **EXP:** CONTINUOUS LAB EVALUATION 12
 
-**DATE:** 23/10/2026
+**DATE:** 14/10/2026
 
-**NAME OF EXP:** BME280 Sensor Interfacing Using I2C and Bosch Sensor API
+**NAME OF EXP:** On-board LED Bring-Up
 
-**HARDWARE:** STM32F401RE Nucleo + BME280
+**HARDWARE:** STM32F401RE Nucleo
 
 ## Aim
 
-Interface the BME280 sensor with the STM32 using I2C and use the official Bosch SensorAPI to obtain compensated temperature, pressure and humidity readings.
+Develop and run a program to verify the NUCLEO-F401RE GPIO output configuration by blinking the on-board LED at a fixed interval.
 
-## Driver Files
+## Configuration
 
-This project includes the three Bosch SensorAPI files:
+- Board: NUCLEO-F401RE.
+- LED: LD2 on PA5, active high.
+- Clock: internal HSI, 16 MHz.
+- Blink interval: 500 ms.
 
-- bme280.c
-- bme280.h
-- bme280_defs.h
+## Working
 
-The Bosch driver performs the compensation calculations. The STM32 application provides the I2C read, I2C write and delay callback functions.
+The program configures PA5 as a GPIO output and toggles LD2 every 500 ms.
 
-## Connections
+## Algorithm
 
-| BME280 | STM32 Nucleo-F401RE |
-|---|---|
-| VCC | 3.3V |
-| GND | GND |
-| SCL | PB6 (I2C1_SCL) |
-| SDA | PB7 (I2C1_SDA) |
-
-I2C1 is configured at 100 kHz. The primary BME280 address is 0x76. Use the secondary address 0x77 if the SDO pin is high.
-
-## Sensor Configuration
-
-- Temperature oversampling: 1x.
-- Pressure oversampling: 1x.
-- Humidity oversampling: 1x.
-- Filter: disabled.
-- Sensor mode: normal.
-- Standby time: 1000 ms.
-
-The Bosch API is configured using bme280_init(), bme280_set_sensor_settings(), bme280_set_sensor_mode() and bme280_get_sensor_data().
-
-## Output
-
-The STM32 reads the compensated values once per second and displays temperature in °C, pressure in hPa and humidity in %RH through USART2.
-
-PuTTY settings: 9600 baud, 8 data bits, no parity, 1 stop bit, no flow control.
+1. Initialize HAL and the system clock.
+2. Enable GPIOA clock.
+3. Configure PA5 as push-pull output.
+4. Toggle PA5.
+5. Wait 500 ms and repeat.
 
 ## Circuit Diagram
 
@@ -56,8 +37,8 @@ PuTTY settings: 9600 baud, 8 data bits, no parity, 1 stop bit, no flow control.
 
 ## Build
 
-Open MDK-ARM/TASK12A.uvprojx in Keil MDK-ARM and build the target. The project includes the official Bosch SensorAPI source and headers.
+Open MDK-ARM/TASK12A.uvprojx in Keil MDK-ARM and build the target.
 
 ## Testing
 
-The project and driver integration are prepared. Sensor communication and live readings are pending hardware verification.
+The standalone Task12A project is prepared. Hardware testing is pending.

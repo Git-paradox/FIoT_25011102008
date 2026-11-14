@@ -1,21 +1,19 @@
 #include "main.h"
 #include "app_config.h"
 #include "bme280.h"
-#include "ESPLib.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
-static struct bme280_dev dev;
-static struct bme280_data comp_data;
-static uint8_t dev_addr = BME280_I2C_ADDR_PRIM;
-static uint8_t uartRxData;
-static char mqttTopic[64];
-static char mqttData[128];
-static uint32_t lastPublishTime = 0U;
+static struct bme280_dev sensor;
+static struct bme280_data sensorData;
+static uint8_t sensorAddress = BME280_I2C_ADDRESS;
+static char requestBuffer[900];
+static uint16_t requestLength = 0U;
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -23,26 +21,41 @@ static void MX_I2C1_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void UART_Print(const char *text);
-static void BME280_InitSensor(void);
-static void PublishSensorData(void);
+static uint8_t ESP_SendCommand(const char *command, const char *expected, uint32_t timeout);
+static uint8_t ESP_WaitForPrompt(uint32_t timeout);
+static void ESP_StartHttpServer(void);
+static uint8_t BME280_InitSensor(void);
+static uint8_t BME280_ReadJson(char *json, uint16_t size);
+static uint8_t HTTP_RequestReady(void);
+static int HTTP_GetLinkId(void);
+static void HTTP_SendSensorResponse(int linkId);
+static void ESP_ProcessIncoming(void);
 
 int8_t user_i2c_read(uint8_t reg_addr, uint8_t *reg_data,
                      uint32_t len, void *intf_ptr)
 {
     uint8_t address = *(uint8_t *)intf_ptr;
-    return (HAL_I2C_Mem_Read(&hi2c1, (uint16_t)(address << 1),
-            reg_addr, I2C_MEMADD_SIZE_8BIT, reg_data, (uint16_t)len,
-            HAL_MAX_DELAY) == HAL_OK) ? BME280_OK : BME280_E_COMM_FAIL;
+
+    if (HAL_I2C_Mem_Read(&hi2c1, (uint16_t)(address << 1),
+                         reg_addr, I2C_MEMADD_SIZE_8BIT, reg_data,
+                         (uint16_t)len, HAL_MAX_DELAY) == HAL_OK)
+        return BME280_OK;
+
+    return BME280_E_COMM_FAIL;
 }
 
 int8_t user_i2c_write(uint8_t reg_addr, const uint8_t *reg_data,
                       uint32_t len, void *intf_ptr)
 {
     uint8_t address = *(uint8_t *)intf_ptr;
-    return (HAL_I2C_Mem_Write(&hi2c1, (uint16_t)(address << 1),
-            reg_addr, I2C_MEMADD_SIZE_8BIT, (uint8_t *)reg_data,
-            (uint16_t)len, HAL_MAX_DELAY) == HAL_OK) ?
-            BME280_OK : BME280_E_COMM_FAIL;
+
+    if (HAL_I2C_Mem_Write(&hi2c1, (uint16_t)(address << 1),
+                          reg_addr, I2C_MEMADD_SIZE_8BIT,
+                          (uint8_t *)reg_data, (uint16_t)len,
+                          HAL_MAX_DELAY) == HAL_OK)
+        return BME280_OK;
+
+    return BME280_E_COMM_FAIL;
 }
 
 void user_delay_us(uint32_t period, void *intf_ptr)
@@ -52,8 +65,6 @@ void user_delay_us(uint32_t period, void *intf_ptr)
 
 int main(void)
 {
-    MQTT_InitTypeDef_t mqttSetting;
-
     HAL_Init();
     SystemClock_Config();
     MX_GPIO_Init();
@@ -61,101 +72,245 @@ int main(void)
     MX_USART1_UART_Init();
     MX_USART2_UART_Init();
 
-    UART_Print("\r\nCAT13 - BME280 MQTT using ESP8266 API\r\n");
-    BME280_InitSensor();
+    UART_Print("\r\nCAT13 - BME280 HTTP Sensor Node\r\n");
 
-    (void)HAL_UART_Receive_IT(&huart1, &uartRxData, 1U);
+    if (BME280_InitSensor() == 0U)
+    {
+        UART_Print("BME280 initialization failed. Check I2C wiring/address.\r\n");
+        Error_Handler();
+    }
 
-    ESP8266_Init(StationMode, huart1);
-    ESP8266_wifiConnect(WIFI_SSID, WIFI_PASSWORD);
-    ESP8266_portConnect("TCP", MQTT_BROKER_HOST, MQTT_BROKER_PORT);
-
-    mqttSetting.keepAlive = MQTT_KEEP_ALIVE;
-    mqttSetting.connectFlag = CleanSession;
-    mqttSetting.clientID = "MqttID";
-    MQTT_connectBroker(&mqttSetting);
-    MQTT_subscribeTopic("IOT", 0U);
-
-    UART_Print("MQTT ready. Publishing BME280 JSON to stm32/test/data.\r\n");
-    lastPublishTime = HAL_GetTick();
+    ESP_StartHttpServer();
+    UART_Print("HTTP server ready. Browser and Node-RED can request the sensor JSON.\r\n");
 
     while (1)
-    {
-        MQTTDataHandler(mqttTopic, mqttData);
-
-        if (mqttTopic[0] != '\0')
-        {
-            UART_Print("MQTT topic: ");
-            UART_Print(mqttTopic);
-            UART_Print(" | data: ");
-            UART_Print(mqttData);
-            UART_Print("\r\n");
-            mqttTopic[0] = '\0';
-            mqttData[0] = '\0';
-        }
-
-        if ((HAL_GetTick() - lastPublishTime) >= 1000U)
-        {
-            lastPublishTime = HAL_GetTick();
-            PublishSensorData();
-        }
-    }
+        ESP_ProcessIncoming();
 }
 
-static void BME280_InitSensor(void)
+static uint8_t BME280_InitSensor(void)
 {
-    dev.intf_ptr = &dev_addr;
-    dev.intf = BME280_I2C_INTF;
-    dev.read = user_i2c_read;
-    dev.write = user_i2c_write;
-    dev.delay_us = user_delay_us;
+    sensor.intf_ptr = &sensorAddress;
+    sensor.intf = BME280_I2C_INTF;
+    sensor.read = user_i2c_read;
+    sensor.write = user_i2c_write;
+    sensor.delay_us = user_delay_us;
 
-    if (bme280_init(&dev) != BME280_OK)
-        Error_Handler();
+    if (bme280_init(&sensor) != BME280_OK)
+        return 0U;
 
-    dev.settings.osr_h = BME280_OVERSAMPLING_1X;
-    dev.settings.osr_p = BME280_OVERSAMPLING_1X;
-    dev.settings.osr_t = BME280_OVERSAMPLING_1X;
-    dev.settings.filter = BME280_FILTER_COEFF_OFF;
-    dev.settings.standby_time = BME280_STANDBY_TIME_1000_MS;
+    sensor.settings.osr_h = BME280_OVERSAMPLING_1X;
+    sensor.settings.osr_p = BME280_OVERSAMPLING_1X;
+    sensor.settings.osr_t = BME280_OVERSAMPLING_1X;
+    sensor.settings.filter = BME280_FILTER_COEFF_OFF;
+    sensor.settings.standby_time = BME280_STANDBY_TIME_1000_MS;
 
-    if (bme280_set_sensor_settings(BME280_SEL_OSR_PRESS |
-        BME280_SEL_OSR_TEMP | BME280_SEL_OSR_HUM |
-        BME280_SEL_FILTER | BME280_SEL_STANDBY, &dev) != BME280_OK ||
-        bme280_set_sensor_mode(BME280_POWERMODE_NORMAL, &dev) != BME280_OK)
-        Error_Handler();
+    if (bme280_set_sensor_settings(
+        BME280_SEL_OSR_PRESS | BME280_SEL_OSR_TEMP |
+        BME280_SEL_OSR_HUM | BME280_SEL_FILTER |
+        BME280_SEL_STANDBY, &sensor) != BME280_OK)
+        return 0U;
+
+    if (bme280_set_sensor_mode(BME280_POWERMODE_NORMAL, &sensor) != BME280_OK)
+        return 0U;
+
+    UART_Print("BME280 initialized using Bosch SensorAPI.\r\n");
+    return 1U;
 }
 
-static void PublishSensorData(void)
+static uint8_t BME280_ReadJson(char *json, uint16_t size)
 {
-    char payload[150];
     double temperature;
     double pressure;
     double humidity;
 
-    if (bme280_get_sensor_data(BME280_ALL, &comp_data, &dev) != BME280_OK)
-    {
-        UART_Print("BME280 read failed.\r\n");
-        return;
-    }
+    if (bme280_get_sensor_data(BME280_ALL, &sensorData, &sensor) != BME280_OK)
+        return 0U;
 
-    temperature = comp_data.temperature;
-    pressure = comp_data.pressure / 100.0;
-    humidity = comp_data.humidity;
+    temperature = sensorData.temperature;
+    pressure = sensorData.pressure / 100.0;
+    humidity = sensorData.humidity;
 
-    (void)snprintf(payload, sizeof(payload),
+    (void)snprintf(json, size,
         "{\"status\":\"success\",\"temperature\":%.2f,\"humidity\":%.2f,\"pressure\":%.2f}",
         temperature, humidity, pressure);
 
-    MQTT_publishTopic("stm32/test/data", payload, QoS0);
+    return 1U;
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+static uint8_t ESP_SendCommand(const char *command, const char *expected, uint32_t timeout)
 {
-    if (huart->Instance == USART1)
+    char response[256];
+    uint16_t length = 0U;
+    uint8_t ch;
+    uint32_t start = HAL_GetTick();
+
+    HAL_UART_Transmit(&huart1, (uint8_t *)command,
+                      (uint16_t)strlen(command), 2000U);
+    HAL_UART_Transmit(&huart1, (uint8_t *)"\r\n", 2U, 1000U);
+
+    response[0] = '\0';
+
+    while ((HAL_GetTick() - start) < timeout)
     {
-        ESP8266_RxCallback(uartRxData);
-        (void)HAL_UART_Receive_IT(&huart1, &uartRxData, 1U);
+        if (HAL_UART_Receive(&huart1, &ch, 1U, 20U) == HAL_OK)
+        {
+            HAL_UART_Transmit(&huart2, &ch, 1U, 100U);
+
+            if (length < sizeof(response) - 1U)
+            {
+                response[length++] = (char)ch;
+                response[length] = '\0';
+            }
+
+            if (expected != NULL && strstr(response, expected) != NULL)
+                return 1U;
+
+            if (strstr(response, "ERROR") != NULL ||
+                strstr(response, "FAIL") != NULL)
+                return 0U;
+        }
+    }
+
+    return (expected == NULL) ? 1U : 0U;
+}
+
+static void ESP_StartHttpServer(void)
+{
+    char command[180];
+
+    UART_Print("Checking ESP8266 AT interface...\r\n");
+    if (ESP_SendCommand("AT", "OK", 3000U) == 0U)
+        UART_Print("No AT response from ESP8266.\r\n");
+
+    (void)ESP_SendCommand("AT+CWMODE=1", "OK", 3000U);
+
+    (void)snprintf(command, sizeof(command), "AT+CWJAP=\"%s\",\"%s\"",
+                   WIFI_SSID, WIFI_PASSWORD);
+    UART_Print("Connecting ESP8266 to Wi-Fi...\r\n");
+    (void)ESP_SendCommand(command, "WIFI GOT IP", WIFI_CONNECT_TIMEOUT);
+
+    UART_Print("\r\nESP8266 IP address:\r\n");
+    (void)ESP_SendCommand("AT+CIFSR", "OK", 3000U);
+
+    (void)ESP_SendCommand("AT+CIPMUX=1", "OK", 3000U);
+    (void)ESP_SendCommand("AT+CIPSERVER=1,80", "OK", 3000U);
+}
+
+static uint8_t HTTP_RequestReady(void)
+{
+    char *frame = strstr(requestBuffer, "+IPD,");
+    char *colon;
+
+    if (frame == NULL)
+        return 0U;
+
+    colon = strchr(frame, ':');
+    if (colon == NULL)
+        return 0U;
+
+    return (strstr(colon, "\r\n\r\n") != NULL) ? 1U : 0U;
+}
+
+static int HTTP_GetLinkId(void)
+{
+    char *frame = strstr(requestBuffer, "+IPD,");
+    int linkId = 0;
+    int dataLength = 0;
+
+    if (frame != NULL)
+        (void)sscanf(frame, "+IPD,%d,%d:", &linkId, &dataLength);
+
+    (void)dataLength;
+    return linkId;
+}
+
+static uint8_t ESP_WaitForPrompt(uint32_t timeout)
+{
+    uint8_t ch;
+    uint32_t start = HAL_GetTick();
+
+    while ((HAL_GetTick() - start) < timeout)
+    {
+        if (HAL_UART_Receive(&huart1, &ch, 1U, 20U) == HAL_OK)
+        {
+            HAL_UART_Transmit(&huart2, &ch, 1U, 100U);
+            if (ch == '>')
+                return 1U;
+        }
+    }
+
+    UART_Print("ESP8266 CIPSEND prompt timeout.\r\n");
+    return 0U;
+}
+
+static void HTTP_SendSensorResponse(int linkId)
+{
+    char json[180];
+    char response[360];
+    char command[64];
+    int jsonLength;
+    int responseLength;
+
+    if (BME280_ReadJson(json, sizeof(json)) == 0U)
+        (void)strcpy(json, "{\"status\":\"sensor_error\"}");
+
+    jsonLength = (int)strlen(json);
+
+    responseLength = snprintf(response, sizeof(response),
+        "HTTP/1.1 200 OK\r\n"
+        "Content-Type: application/json\r\n"
+        "Content-Length: %d\r\n"
+        "Connection: close\r\n\r\n%s", jsonLength, json);
+
+    (void)snprintf(command, sizeof(command), "AT+CIPSEND=%d,%d",
+                   linkId, responseLength);
+
+    HAL_UART_Transmit(&huart1, (uint8_t *)command,
+                      (uint16_t)strlen(command), 1000U);
+    HAL_UART_Transmit(&huart1, (uint8_t *)"\r\n", 2U, 1000U);
+
+    if (ESP_WaitForPrompt(4000U) != 0U)
+    {
+        HAL_UART_Transmit(&huart1, (uint8_t *)response,
+                          (uint16_t)responseLength, 3000U);
+        (void)ESP_SendCommand("", "SEND OK", 5000U);
+        UART_Print("\r\nHTTP sensor JSON sent:\r\n");
+        UART_Print(json);
+        UART_Print("\r\n");
+    }
+
+    (void)snprintf(command, sizeof(command), "AT+CIPCLOSE=%d", linkId);
+    (void)ESP_SendCommand(command, "OK", 3000U);
+}
+
+static void ESP_ProcessIncoming(void)
+{
+    uint8_t ch;
+
+    if (HAL_UART_Receive(&huart1, &ch, 1U, 20U) != HAL_OK)
+        return;
+
+    if (requestLength < sizeof(requestBuffer) - 1U)
+    {
+        requestBuffer[requestLength++] = (char)ch;
+        requestBuffer[requestLength] = '\0';
+    }
+    else
+    {
+        requestLength = 0U;
+        requestBuffer[0] = '\0';
+        UART_Print("HTTP receive buffer cleared (overflow).\r\n");
+        return;
+    }
+
+    if (HTTP_RequestReady() != 0U)
+    {
+        int linkId = HTTP_GetLinkId();
+        UART_Print("\r\nHTTP request received:\r\n");
+        UART_Print(requestBuffer);
+        HTTP_SendSensorResponse(linkId);
+        requestLength = 0U;
+        requestBuffer[0] = '\0';
     }
 }
 

@@ -2,45 +2,37 @@
 
 **EXP:** CONTINUOUS LAB EVALUATION 11
 
-**DATE:** 14/10/2026
+**DATE:** 12/10/2026
 
-**NAME OF EXP:** On-board Switch Control with State Remembrance and Short/Long Press Detection
+**NAME OF EXP:** Node-RED as a Second HTTP Client of the STM32/Wemos HTTP Server
 
-**HARDWARE:** STM32F401RE Nucleo
+**HARDWARE:** STM32F401RE Nucleo + Wemos D1 Mini (ESP8266) + Node-RED PC
 
 ## Aim
 
-Use the on-board user button to control the LED, remember its state after the button is released and distinguish short presses from long presses.
+Use Node-RED as a second HTTP client to request the page served by the STM32/Wemos HTTP server and display the returned HTTP response in the Debug sidebar.
+
+## Firmware
+
+The STM32 and ESP8266 use the same TCP server implementation as TASK11A:
+
+- ESP8266 station mode and Wi-Fi connection.
+- Multiple TCP connections using AT+CIPMUX=1.
+- HTTP server on port 80 using AT+CIPSERVER=1,80.
+- Incoming browser/Node-RED requests are received through +IPD.
+- HTTP responses are sent using AT+CIPSEND with the connection ID and response length.
+
+## Node-RED Flow
+
+Import Tools/NodeRED_flow.json into Node-RED and deploy it. The flow is:
+
+**Inject → HTTP Request → Debug**
+
+Set the HTTP Request node URL to http://<ESP8266_IP>/. The Inject node triggers the request and the Debug node displays the HTML response received from the STM32.
 
 ## Configuration
 
-- Board: NUCLEO-F401RE.
-- LED: LD2 on PA5, active high.
-- Button: B1 on PC13, active low.
-- Button input: internal pull-up.
-- Debounce interval: 25 ms.
-- Long-press threshold: 1000 ms.
-- Clock: internal HSI, 16 MHz.
-
-## Working
-
-A debounced short press toggles the remembered LED state. Releasing the button does not reset that state. A long press (1000 ms or more) switches the LED into or out of continuous blinking mode.
-
-The assignment requires different actions for short and long presses but does not prescribe the exact actions. The short-toggle/long-blink behavior is the implementation used here.
-
-## Algorithm
-
-1. Initialize HAL, GPIOA and GPIOC.
-2. Read the button and debounce changes for 25 ms.
-3. Record the tick when a stable press begins.
-4. On release, calculate the press duration.
-5. For a short press, toggle the remembered LED state.
-6. For a long press, toggle blinking mode.
-7. While blinking mode is active, toggle LD2 at the configured interval.
-
-## Code
-
-The program uses HAL_GPIO_ReadPin(), HAL_GPIO_WritePin(), HAL_GPIO_TogglePin() and HAL_GetTick().
+Set WIFI_SSID and WIFI_PASSWORD in Core/Inc/app_config.h. Replace the sample IP address in the Node-RED HTTP Request node with the IP shown by the ESP8266 AT+CIFSR command.
 
 ## Circuit Diagram
 
@@ -48,8 +40,8 @@ The program uses HAL_GPIO_ReadPin(), HAL_GPIO_WritePin(), HAL_GPIO_TogglePin() a
 
 ## Build
 
-Open MDK-ARM/TASK11B.uvprojx in Keil MDK-ARM and build the target. The HEX output is created in MDK-ARM/Objects/.
+Open MDK-ARM/TASK11B.uvprojx in Keil MDK-ARM and build the target.
 
 ## Testing
 
-The standalone Task11B project is prepared. Hardware testing is pending.
+The firmware and Node-RED flow are prepared. The Node-RED request and Debug output are pending hardware/network verification.

@@ -2,48 +2,37 @@
 
 **EXP:** CONTINUOUS LAB EVALUATION 12
 
-**DATE:** 23/10/2026
+**DATE:** 14/10/2026
 
-**NAME OF EXP:** BME280 Data over ESP8266 HTTP
+**NAME OF EXP:** On-board Switch Control with State Remembrance
 
-**HARDWARE:** STM32F401RE Nucleo + Wemos D1 Mini (ESP8266) + BME280
+**HARDWARE:** STM32F401RE Nucleo
 
 ## Aim
 
-Read compensated BME280 values and return them as a JSON payload inside a valid HTTP response sent through the ESP8266.
+Modify the application so the on-board push button controls the LED. The LED shall toggle its state when a valid button press is detected and shall remember its previous state after the button is released.
 
-## Connections
+## Configuration
 
-| Purpose | STM32 connection |
-|---|---|
-| ESP8266 UART | USART1: PA9 TX, PA10 RX |
-| PC debug terminal | USART2: PA2 TX, PA3 RX |
-| BME280 I2C | I2C1: PB6 SCL, PB7 SDA |
-
-Connect TX to RX, RX to TX and use a common ground. UART logic is 3.3V. Wemos UART is configured for 115200 baud, 8-N-1. USART2 terminal is 9600 baud, 8-N-1.
+- Board: NUCLEO-F401RE.
+- LED: LD2 on PA5, active high.
+- Button: B1 on PC13, active low.
+- Button input: internal pull-up.
+- Software debounce: 25 ms.
+- Clock: internal HSI, 16 MHz.
 
 ## Working
 
-The STM32 initializes the Bosch BME280 API, connects the ESP8266 to the configured Wi-Fi network and starts a TCP server on port 80. When a browser sends an HTTP request, the STM32 reads the sensor and constructs a JSON payload.
+The program reads PC13 and applies a 25 ms debounce interval. On each confirmed button press, it toggles the stored LED state and writes that state to PA5. The LED therefore remains in its selected state after the button is released.
 
-The HTTP response includes:
+## Algorithm
 
-- HTTP/1.1 200 OK
-- Content-Type: application/json
-- Content-Length calculated from the actual JSON string length.
-- JSON with status, temperature, humidity and pressure.
-
-## Wi-Fi Configuration
-
-Replace WIFI_SSID and WIFI_PASSWORD in Core/Inc/app_config.h. The PC/browser and Wemos must be on the same local network. The ESP8266 IP is displayed by the AT firmware after Wi-Fi connection.
-
-Open http://<ESP8266-IP>/ in a browser to view the JSON response.
-
-## Example JSON
-
-{"status":"success","temperature":28.45,"humidity":62.30,"pressure":1008.72}
-
-The values above are only an example format, not measured readings.
+1. Initialize HAL and GPIO.
+2. Configure PA5 as output and PC13 as input with pull-up.
+3. Read the button input continuously.
+4. Accept a state change only after the debounce interval.
+5. Toggle the stored LED state on a confirmed press.
+6. Repeat.
 
 ## Circuit Diagram
 
@@ -55,4 +44,4 @@ Open MDK-ARM/TASK12B.uvprojx in Keil MDK-ARM and build the target.
 
 ## Testing
 
-Wi-Fi connection, browser response and sensor output are pending hardware verification.
+The standalone Task12B project is prepared. Hardware testing is pending.

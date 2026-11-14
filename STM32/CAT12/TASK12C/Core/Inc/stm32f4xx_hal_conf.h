@@ -6,9 +6,6 @@
 #define HAL_GPIO_MODULE_ENABLED
 #define HAL_CORTEX_MODULE_ENABLED
 #define HAL_FLASH_MODULE_ENABLED
-#define HAL_DMA_MODULE_ENABLED
-#define HAL_UART_MODULE_ENABLED
-#define HAL_I2C_MODULE_ENABLED
 
 #define HSE_VALUE              8000000U
 #define HSE_STARTUP_TIMEOUT    100U
@@ -28,23 +25,17 @@
 #ifdef HAL_RCC_MODULE_ENABLED
 #include "stm32f4xx_hal_rcc.h"
 #endif
+
 #ifdef HAL_FLASH_MODULE_ENABLED
 #include "stm32f4xx_hal_flash.h"
 #endif
+
 #ifdef HAL_GPIO_MODULE_ENABLED
 #include "stm32f4xx_hal_gpio.h"
 #endif
+
 #ifdef HAL_CORTEX_MODULE_ENABLED
 #include "stm32f4xx_hal_cortex.h"
-#endif
-#ifdef HAL_DMA_MODULE_ENABLED
-#include "stm32f4xx_hal_dma.h"
-#endif
-#ifdef HAL_UART_MODULE_ENABLED
-#include "stm32f4xx_hal_uart.h"
-#endif
-#ifdef HAL_I2C_MODULE_ENABLED
-#include "stm32f4xx_hal_i2c.h"
 #endif
 
 #ifdef USE_FULL_ASSERT

@@ -1,22 +1,20 @@
 [PreviousGenFiles]
 AdvancedFolderStructure=true
-HeaderFileListSize=7
+HeaderFileListSize=6
 HeaderFiles#0=..\Core\Inc\main.h
 HeaderFiles#1=..\Core\Inc\stm32f4xx_hal_conf.h
 HeaderFiles#2=..\Core\Inc\stm32f4xx_it.h
 HeaderFiles#3=..\Core\Inc\bme280.h
 HeaderFiles#4=..\Core\Inc\bme280_defs.h
 HeaderFiles#5=..\Core\Inc\app_config.h
-HeaderFiles#6=..\Core\Inc\ESPLib.h
 HeaderPath#0=..\Core\Inc
 HeaderFiles=;
-SourceFileListSize=6
+SourceFileListSize=5
 SourceFiles#0=..\Core\Src\main.c
 SourceFiles#1=..\Core\Src\bme280.c
-SourceFiles#2=..\Core\Src\ESPLib.c
-SourceFiles#3=..\Core\Src\stm32f4xx_it.c
-SourceFiles#4=..\Core\Src\stm32f4xx_hal_msp.c
-SourceFiles#5=..\Core\Src\system_stm32f4xx.c
+SourceFiles#2=..\Core\Src\stm32f4xx_it.c
+SourceFiles#3=..\Core\Src\stm32f4xx_hal_msp.c
+SourceFiles#4=..\Core\Src\system_stm32f4xx.c
 SourcePath#0=..\Core\Src
 SourceFiles=;
 

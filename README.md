@@ -22,9 +22,10 @@ Each submission is stored in its own task folder. Every STM32 task has a separat
 | STM32 | CAT8 | TASK8A, TASK8B, TASK8C | GPIO input/output, debounced event toggle and short/long press control |
 | STM32 | CAT9 | TASK9A, TASK9B | Basic UART transmit/echo and string-based LED commands |
 | STM32 | CAT10 | TASK10A, TASK10B, TASK10C | Wemos UART, ESP8266 AT commands, Wi-Fi and BME280 TCP transmission |
-| STM32 | CAT11 | TASK11A, TASK11B | On-board LED, switch state remembrance and short/long press detection |
-| STM32 | CAT12 | TASK12A, TASK12B, TASK12C | Bosch BME280 SensorAPI, HTTP/JSON output and Node-RED analytics |
-| STM32 | CAT13 | TASK13 | BME280 readings with custom ESP8266 MQTT publish/subscribe API |
+| STM32 | CAT11 | TASK11A, TASK11B | ESP8266 TCP/HTTP server and Node-RED second HTTP client |
+| STM32 | CAT12 | TASK12A, TASK12B, TASK12C | On-board LED, button state remembrance and short/long press detection |
+| STM32 | CAT13 | TASK13 | BME280 SensorAPI, ESP8266 HTTP/JSON server and Node-RED analytics |
+| STM32 | CAT14 | TASK14 | BME280 readings with custom ESP8266 MQTT publish/subscribe API |
 
 ## Notes
 

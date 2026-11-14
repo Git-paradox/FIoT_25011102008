@@ -1,0 +1,63 @@
+[
+  {
+    "id": "cat11-http-tab",
+    "type": "tab",
+    "label": "CAT11 - HTTP Client",
+    "disabled": false,
+    "info": "Node-RED requests the STM32/Wemos HTTP server."
+  },
+  {
+    "id": "cat11-inject",
+    "type": "inject",
+    "z": "cat11-http-tab",
+    "name": "Request STM32 page",
+    "props": [{ "p": "payload" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 180,
+    "y": 120,
+    "wires": [["cat11-http-request"]]
+  },
+  {
+    "id": "cat11-http-request",
+    "type": "http request",
+    "z": "cat11-http-tab",
+    "name": "GET STM32 HTTP server",
+    "method": "GET",
+    "ret": "txt",
+    "paytoqs": "ignore",
+    "url": "http://192.168.1.105/",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [],
+    "x": 430,
+    "y": 120,
+    "wires": [["cat11-debug"]]
+  },
+  {
+    "id": "cat11-debug",
+    "type": "debug",
+    "z": "cat11-http-tab",
+    "name": "HTTP response from STM32",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 700,
+    "y": 120,
+    "wires": []
+  }
+]
